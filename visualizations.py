@@ -14,12 +14,12 @@ def generate_config():
     return {'showLink': False, 'displayModeBar': False, 'showAxisRangeEntryBoxes': True}
 
 
-def plot_high_low(prices, lookback_high, lookback_low, title):
+def plot_high_low(prices, lookback_high, lookback_low, ticker, title):
     config = generate_config()
     layout = go.Layout(title=title)
 
     stock_trace = go.Scatter(
-        name='Index',
+        name=ticker,
         x=prices.index,
         y=prices,
         line={'color': 'red'})

@@ -1,5 +1,9 @@
 vn621
+vn650
 sqlite.ipynb
 *.docx
 *.md
 *.pyc
+*.csv
+*.pdf
+*.pptx
