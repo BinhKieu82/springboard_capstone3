@@ -1,5 +1,9 @@
+#%%
+import cvxpy as cvx
+import zipline
 from abc import ABC, abstractmethod
 
+#%%
 class AbstractOptimalHoldings(ABC):    
     @abstractmethod
     def _get_obj(self, weights, alpha_vector):
@@ -65,6 +69,7 @@ class AbstractOptimalHoldings(ABC):
         
         return pd.DataFrame(data=optimal_weights, index=alpha_vector.index)
 
+#%%
 class OptimalHoldings(AbstractOptimalHoldings):
     def _get_obj(self, weights, alpha_vector):
         """
@@ -118,9 +123,11 @@ class OptimalHoldings(AbstractOptimalHoldings):
         self.weights_max=weights_max
         self.weights_min=weights_min
 
+#%%
 def get_factor_exposures(factor_betas, weights):
     return factor_betas.loc[weights.index].T.dot(weights)
 
+#%%
 class OptimalHoldingsRegualization(OptimalHoldings):
     def _get_obj(self, weights, alpha_vector):
         """
@@ -150,6 +157,7 @@ class OptimalHoldingsRegualization(OptimalHoldings):
         self.weights_max=weights_max
         self.weights_min=weights_min
 
+#%%
 class OptimalHoldingsStrictFactor(OptimalHoldings):
     def _get_obj(self, weights, alpha_vector):
         """
@@ -172,8 +180,4 @@ class OptimalHoldingsStrictFactor(OptimalHoldings):
         #TODO: Implement function
         target_weights = np.squeeze( (alpha_vector - alpha_vector.mean())/ np.abs(alpha_vector.sum()) )
         return cvx.Minimize(-(alpha_vector.values.T*weights)+cvx.pnorm(weights-target_weights,2))
-
-
-
-
 

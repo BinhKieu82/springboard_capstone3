@@ -1,13 +1,14 @@
+#%%
 import numpy as np
 import pandas as pd
-from zipline.assets._assets import Equity  # Required for USEquityPricing
+from zipline.assets._assets import Equity
 from zipline.pipeline.data import USEquityPricing
 from zipline.pipeline.classifiers import Classifier
 from zipline.pipeline.engine import SimplePipelineEngine
 from zipline.pipeline.loaders import USEquityPricingLoader
 from zipline.utils.numpy_utils import int64_dtype
 
-
+#%%
 def get_high_lows_lookback(high, low, lookback_days):
     """
     Get the highs and lows in a lookback window.
@@ -33,6 +34,7 @@ def get_high_lows_lookback(high, low, lookback_days):
     lookback_low = low.shift(1).rolling(lookback_days).min()
     return lookback_high, lookback_low
 
+#%%
 def bucketing_factors(factor,quantiles):
     """
     Calculates quantiles
@@ -40,13 +42,14 @@ def bucketing_factors(factor,quantiles):
     buckets = pd.qcut(factor, q=quantiles, labels=False)
     return buckets
 
+#%%
 def resample_prices(prices, freq='M'):
     """
     Resample close prices for each ticker at specified frequency.
     """
     return prices.resample(freq).last()
 
-
+#%%
 def compute_log_returns(prices):
     """
     Compute log returns for each ticker.
@@ -54,12 +57,14 @@ def compute_log_returns(prices):
     log_prices = np.log(prices)
     return log_prices - log_prices.shift(1)
 
+#%%
 def shift_returns(returns, shift_n):
     """
     Generate shifted returns
    """
     return returns.shift(shift_n)
 
+#%%
 class PricingLoader(object):
     def __init__(self, bundle_data):
         self.loader = USEquityPricingLoader(
@@ -77,7 +82,7 @@ class PricingLoader(object):
         # return super().__init__(*args, **kwargs)
         return self.loader
 
-
+#%%
 class Sector(Classifier):
     dtype = int64_dtype
     window_length = 0
@@ -85,7 +90,7 @@ class Sector(Classifier):
     missing_value = -1
 
     def __init__(self):
-        self.data = np.load('./data1.npy')
+        self.data = np.load('./data.npy')
 
     def _compute(self, arrays, dates, assets,mask):
         return np.where(
@@ -94,7 +99,7 @@ class Sector(Classifier):
             self.missing_value,
         )
 
-
+#%%
 def build_pipeline_engine(bundle_data, trading_calendar):
     pricing_loader = PricingLoader(bundle_data)
 

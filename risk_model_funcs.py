@@ -1,6 +1,9 @@
+#%%
+import numpy as np
+import pandas as pd
 from sklearn.decomposition import PCA
 
-
+#%%
 def fit_pca(returns, num_factor_exposures, svd_solver):
     """
     Fit PCA model with returns.
@@ -22,6 +25,7 @@ def fit_pca(returns, num_factor_exposures, svd_solver):
     mod = PCA(n_components=num_factor_exposures,svd_solver=svd_solver)
     return mod.fit(returns)
 
+#%%
 def factor_betas(pca, factor_beta_indices, factor_beta_columns):
     """
     Get the factor betas from the PCA model.
@@ -50,6 +54,7 @@ def factor_betas(pca, factor_beta_indices, factor_beta_columns):
         )
     return factor_betas
 
+#%%
 def factor_returns(pca, returns, factor_return_indices, factor_return_columns):
     """
     Get the factor returns from the PCA model.
@@ -80,6 +85,7 @@ def factor_returns(pca, returns, factor_return_indices, factor_return_columns):
         )
     return factor_returns
 
+#%%
 def factor_cov_matrix(factor_returns, ann_factor):
     """
     Get the factor covariance matrix
@@ -100,6 +106,7 @@ def factor_cov_matrix(factor_returns, ann_factor):
     
     return factor_cov_matrix
 
+#%%
 def idiosyncratic_var_matrix(returns, factor_returns, factor_betas, ann_factor):
     """
     Get the idiosyncratic variance matrix
@@ -133,6 +140,7 @@ def idiosyncratic_var_matrix(returns, factor_returns, factor_betas, ann_factor):
         )
     return idio_var_matrix
 
+#%%
 def idiosyncratic_var_vector(returns, idiosyncratic_var_matrix):
     """
     Get the idiosyncratic variance vector
@@ -155,6 +163,7 @@ def idiosyncratic_var_vector(returns, idiosyncratic_var_matrix):
         )    
     return idio_var_vector
 
+#%%
 def predict_portfolio_risk(factor_betas, factor_cov_matrix, idiosyncratic_var_matrix, weights):
     """
     Get the predicted portfolio risk
@@ -192,3 +201,5 @@ def predict_portfolio_risk(factor_betas, factor_cov_matrix, idiosyncratic_var_ma
 
 
 
+
+# %%
