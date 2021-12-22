@@ -1,4 +1,6 @@
 #%%
+import numpy as np
+import pandas as pd
 import cvxpy as cvx
 import zipline
 from abc import ABC, abstractmethod
@@ -63,7 +65,7 @@ class AbstractOptimalHoldings(ABC):
         constraints = self._get_constraints(weights, factor_betas.loc[alpha_vector.index].values, risk)
         
         prob = cvx.Problem(obj, constraints)
-        prob.solve(max_iters=500,solver=cvx.SCS,verbose=False)
+        prob.solve(max_iters=500)
 
         optimal_weights = np.asarray(weights.value).flatten()
         

@@ -4,7 +4,7 @@ import pandas as pd
 from zipline.pipeline.factors import Returns
 from zipline.pipeline.factors import SimpleMovingAverage
 from zipline.pipeline.data import USEquityPricing
-# import alphalens as al
+import alphalens as al
 
 #%%
 def momentum(window_length, universe):

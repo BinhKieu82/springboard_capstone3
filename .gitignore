@@ -1,5 +1,6 @@
 data
 data.npy
+images
 vn621
 vn650
 sqlite.ipynb
@@ -7,5 +8,6 @@ sqlite.ipynb
 *.md
 *.pyc
 *.csv
-*.pdf
+# *.pdf
 *.pptx
+references/cto_sentiment.pdf
